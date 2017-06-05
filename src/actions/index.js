@@ -12,6 +12,10 @@ export const EXPLORE = "EXPLORE";
 export const PRODUCE = "PRODUCE";
 export const ARMY = "ARMY";
 
+
+export const PLAY_CARD = "PLAY_CARD";
+export const CARD_SELECTION = "CARD_SELECTION";
+
 /* Action creators */
 export function startGame() {
     return {
@@ -91,5 +95,24 @@ export function selectedCard(player, card, index) {
     return {
       type: NO_ACTION,
       player: player
+  };
+};
+
+  //export function playCard(card,index){
+  export function playCard(x,y,card,index){
+    return {
+      type: PLAY_CARD,
+      index: index,
+      card: card,
+      x: x,
+      y: y
+  };
+};
+
+export function cardSelection(card,index){
+  return {
+    type: CARD_SELECTION,
+    index: index,
+    card: card
   };
 };

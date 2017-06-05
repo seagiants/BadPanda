@@ -1,46 +1,49 @@
 import React from "react";
 import { connect } from "react-redux";
-import { noAction } from "../actions"
+import { noAction, playCard } from "../actions";
 
 const w = 30;
 const h = 30;
 
-const styles = type => ({
-  fill: type.hidden ? "black" : type.color
-});
+const cellColor = cell => cell.card ? cell.card.color : "gray";
 
-const Cell = ({ type, click, selectedPower }) => {
+const Cell = ({ cell, click, selectedCard, indexSelectedCard }) => {
   return (
     <svg
       width={w}
-      height={h}
+      height={h} style={{border: "2px solid black"}}
       onClick={e => {
         e.preventDefault();
         console.log(
-          `clicking on a ${type.name} tile with position [${type.x} - ${type.y}]`
+          `clicking on a ${cell.name} tile with position [${cell.x} - ${cell.y}]`
         );
-        click(type.x, type.y, selectedPower);
+        click(cell.x, cell.y, selectedCard, indexSelectedCard);
       }}
     >
-      <rect width={w} height={h} style={styles(type)} />
+      <rect width={w} height={h} style={{fill: cellColor(cell)}} />
     </svg>
   );
 };
 
 const mapStateToProps = state => {
-  if(state.mapState.selectedPower !== null) {
-    return { selectedPower: state.mapState.selectedPower };
+  if(state.mapState.selectedCard !== null) {
+    return {
+      selectedCard: state.mapState.selectedCard,
+      indexSelectedCard : state.mapState.indexSelectedCard
+     };
   } else {
-    return { selectedPower: noAction };
+    return {
+      selectedCard: null,
+      indexSelectedCard : null
+    };
   }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-
   return {
-    click: (x, y, action) => {
-      if(action !== null && action !== undefined){
-        dispatch(action(x, y));
+    click: (x, y, card, index) => {
+      if(card !== null && card !== undefined){
+        dispatch(playCard(x,y,card,index));
       }
     }
   };
