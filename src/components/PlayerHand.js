@@ -7,17 +7,23 @@ const styles = {
   alignSelf: "center"
 };
 
-export const PlayerHand = ({ cards }) => (
-  <div style={styles}>
-      {cards.map((card, index) => (
-        <Card
-          key={uniqueId(card.name)}
-          card={card}
-          index={index}
-          />
-      ))}
-  </div>
-);
+const renderHand = (cards) => {
+if(cards) {
+  return cards.map((card, index) => (
+    <Card
+      key={uniqueId(card.name)}
+      card={card}
+      index={index}
+    />));}
+  else {
+        return [];
+        }};
+
+
+export const PlayerHand = ({ cards }) =>{
+      return (
+              <div style={styles}>{renderHand(cards)}</div>
+              );}
 
 const mapStateToProps = (state, ownProps) => {
   return {

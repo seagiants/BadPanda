@@ -1,19 +1,16 @@
-import random from "lodash.random";
 
-const baseTypes = [
-  { name: "river", color: "blue", hidden: true },
-  { name: "mountain", color: "grey", hidden: true },
-  { name: "grass", color: "green", hidden: true }
-];
+function isDoor(x,y,xMax,yMax){
+  return (x+1===xMax && (y+3==yMax || y+2===yMax));
+};
 
-export function generateType(baseType, x, y) {
-  return { ...baseType, x: x, y: y };
-}
+function isWall(x,y,xMax,yMax){
+  return (!(isDoor(x,y,xMax,yMax)) && (x===0 || x+1===xMax || y===0 || y+1===yMax) );
+};
 
-export function randType(i, j) {
-  let base = baseTypes[random(baseTypes.length - 1)];
-  let gen = generateType(base, i, j);
-  return gen;
+
+
+function generateCell(x, y, xMax, yMax) {
+  return { x: x, y: y, showMatches: false, card: null, isWall: isWall(x,y,xMax,yMax)  };
 }
 
 /* Generate an x by y matrix, each cell being of a particular type */
@@ -22,7 +19,7 @@ export const generateMap = (x, y) => {
   for (let i = 0; i < x; i++) {
     map.push([]);
     for (let j = 0; j < y; j++) {
-      map[i].push(randType(i, j));
+      map[i].push(generateCell(i, j, x, y));
     }
   }
   return map;

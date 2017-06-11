@@ -1,27 +1,25 @@
-import { drawCards } from "../engine";
-import { PLAY_CARD } from "../actions"
+import { generateDeck, fillHand, dropAndDrawCardFromHand } from "../engine";
+import { PLAY_CARD, START_GAME } from "../actions";
+import { catLib } from "../libraries/catLib.js"
 
 const initialState = {
-    cards : drawCards(5)
+    deck : generateDeck(catLib),
+    isStarted : false
   };
 
-const dropAndDrawCardFromHand = (playerHand, cardIndex) => {
-  return playerHand.map( (card,index) => {
-    if (index !== cardIndex) {
-      return card;
-    }else{
-      return drawCards(1)[0];
-    }
-  });
-}
-
 export const playersState = (state = initialState, action) => {
+  let newState;
   switch (action.type) {
+    case START_GAME :
+      newState = fillHand(state.deck,[]);
+      return {
+        ...state, cards: newState.cards, deck: newState.deck , isStarted : true
+      };
     case PLAY_CARD :
-       return {
-         ...state, cards: dropAndDrawCardFromHand(state.cards, action.index)
-       };
-
+      newState = dropAndDrawCardFromHand(state.cards, state.deck, action.index)
+      return {
+         ...state, cards: newState.cards, deck: newState.deck
+              };
     default:
       return state;
     }
