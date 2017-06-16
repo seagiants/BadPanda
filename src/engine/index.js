@@ -1,3 +1,4 @@
-import { generateMap } from "./map";
+import { generateMap, drawPathAndGetDoors } from "./map";
 import { generateDeck,drawCards, fillHand, dropAndDrawCardFromHand } from "./hand.js";
-export { generateMap , drawCards, generateDeck, fillHand, dropAndDrawCardFromHand};
+import { generateMonsters } from "./monsters.js"
+export { generateMap , drawCards, generateDeck, fillHand, dropAndDrawCardFromHand, generateMonsters, drawPathAndGetDoors};

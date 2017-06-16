@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { startGame, endTurn } from "../actions";
+import { START_GAME, sendAction, END_TURN } from "../actions";
+
 
 const h = 40;
 const w = 60;
@@ -16,7 +17,6 @@ const StartButton = ({isStarted, click}) => {
     console.log(`clicking on a ${RenderTextButton(isStarted)}`);
     click(isStarted);}} >
     <g>
-
    <rect x="10" y="10" width={w} height={h}
     style={{fill: "gray"}}
   />
@@ -36,9 +36,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     click: (isStarted) => {
       if(!(isStarted)){
-        dispatch(startGame());
+        dispatch(sendAction(START_GAME));
       }else{
-        dispatch(endTurn());
+        dispatch(sendAction(END_TURN));
       }
     }
   };

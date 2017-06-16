@@ -16,7 +16,7 @@ export const playersState = (state = initialState, action) => {
         ...state, cards: newState.cards, deck: newState.deck , isStarted : true
       };
     case PLAY_CARD :
-      newState = dropAndDrawCardFromHand(state.cards, state.deck, action.index)
+      newState = dropAndDrawCardFromHand(state.cards, state.deck, action.payload.index)
       return {
          ...state, cards: newState.cards, deck: newState.deck
               };
