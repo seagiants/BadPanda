@@ -1,5 +1,6 @@
 
 import { calculMatches } from "./calculMatches.js"
+import { getMonsters} from "../selectors"
 
 /* Action types */
 export const START_GAME = "START_GAME";
@@ -23,12 +24,20 @@ export function sendAction(type,payload) {
 };
 
 export function clickCell(payload,dispatch){
-//  console.log(payload);
+  console.log(payload);
   if(payload.card){
       const matches = calculMatches(payload.card,payload.neighbours);
       dispatch(sendAction(PLAY_CARD,{...payload,matches:matches}));
+      /* Auto attack on 1st monster
       if(matches && matches.total > 1){
         dispatch(sendAction(ATTACK,{...payload,matches:matches}));
-      }
+      }*/
+  } else {
+    const monsters = getMonsters(payload.monsters,payload.x, payload.y);
+    console.log(monsters);
+    console.log(payload);
+    if(monsters){
+    dispatch(sendAction(ATTACK,{...payload,monsters:monsters}));
+    }
   }
 };

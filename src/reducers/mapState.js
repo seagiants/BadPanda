@@ -81,11 +81,12 @@ const moveMonsters = (monsters,door,gameMap) => {
   };
 };
 
-const attackMonsters = (monsters, matches) => {
+const attackMonsters = (monsters, matches,index=0) => {
 //  console.log(monsters);
 //  console.log(matches);
-  if(monsters.active.length >0){
-    var attackedMonster = monsters.active[0];
+
+  if(monsters.active.length >index&&matches){
+    var attackedMonster = monsters.active[index];
     if(!(attackedMonster.hp > matches.total)){
       return {...monsters, active:monsters.active.slice(1)};
     }
@@ -123,13 +124,14 @@ export const mapState = (state = initialState, action) => {
       let newSelectedCard = action.payload.card;
       return { ...state, selectedCard: newSelectedCard, indexSelectedCard : action.payload.index };
     case actions.PLAY_CARD:
-      return { ...state, gameMap : cardOnCell(state.gameMap, action.payload.x, action.payload.y, action.payload.card ), selectedCard: null, indexSelectedCard: null, scoredMatches: action.payload.matches}
+      return { ...state, gameMap : cardOnCell(state.gameMap, action.payload.x, action.payload.y, action.payload.card ), selectedCard: null, indexSelectedCard: null, scoredMatches: action.payload.matches, monsters: moveMonsters(state.monsters,state.doors[0],state.gameMap)}
     case actions.PRE_SHOW_MATCHES:
       return { ...state, gameMap : matchesOnCell(state.gameMap, action.payload.x, action.payload.y), matches : action.payload.matches }
     case actions.END_TURN:
       return { ...state, monsters: moveMonsters(state.monsters,state.doors[0],state.gameMap) };
-    case actions.ATTACK:
-      return { ...state, monsters : attackMonsters(state.monsters,action.payload.matches) };
+   case actions.ATTACK:
+      return { ...state, monsters : attackMonsters(state.monsters,state.scoredMatches) };
+
     default:
       return state;
   }

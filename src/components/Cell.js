@@ -60,15 +60,14 @@ const Cell = ({ cell, click, cellOver, selectedCard, indexSelectedCard, monsters
 const mapStateToProps = (state, ownProps) => {
     //Getting neighbours
     const neighbours = ownProps.cell.neighbours.map(neighbour=>neighbour!==null?state.mapState.gameMap[neighbour.x][neighbour.y]:null);
-    //Getting monsters on this cell
     const selectedCard = state.mapState.selectedCard;
+    //Getting monsters on this cell
     const monsters = state.mapState.monsters.active.filter((monster)=>(monster.position?monster.position.x===ownProps.cell.x&&monster.position.y===ownProps.cell.y:false));
     const matches = selectedCard?calculMatches(selectedCard,neighbours):null;
     return {
       selectedCard: selectedCard,
       indexSelectedCard: state.mapState.indexSelectedCard,
       neighbours: neighbours,
-      //matches: state.mapState.matches,
       matches: matches,
       monsters: monsters
     };
@@ -78,7 +77,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     click: (cell, card, index,matches,neighbours,monsters) => {
 //      console.log(card);
-      if( isClickable(cell) && card !== null && card !== undefined){
+      if( isClickable(cell)){
         clickCell({x:cell.x,y:cell.y,card:card,index:index,matches:matches,neighbours:neighbours,monsters:monsters},dispatch);
       }
     },
