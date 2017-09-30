@@ -1,4 +1,3 @@
-
 import { catLib } from "../libraries/catLib.js"
 
 const calculMatch =  (card, neighbours, category, tempScore = 0) => {
@@ -6,7 +5,7 @@ const calculMatch =  (card, neighbours, category, tempScore = 0) => {
   var sum = 0;
   if(neighbours.length > 0){
     const cardCat = card[category];
-    const isMatch = (neighbour,category)=>(cardCat === neighbours[0][category])
+    const isMatch = (neighbour,category)=>(cardCat === neighbour[category])
     for (var i = 0; i < neighbours.length; i++) {
       sum += isMatch(neighbours[i],category);
     }
@@ -25,7 +24,7 @@ const calculTotal = (matches)=>{
   return sum!==null&&sum!==undefined?sum:0;
 };
 
-export const calculMatches = (card, neighbours) => {
+export const getMatches = (card, neighbours) => {
   //console.log("neighbours");
   //console.log(neighbours);
   const realNeighbours = neighbours.filter((element)=>(element !== null && element !== undefined));

@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PRE_SHOW_MATCHES, clickCell,sendAction } from "../actions";
-import { calculMatches} from "../actions/calculMatches.js"
+import { getMatches } from "../selectors/getMatches.js"
 
 const w = 30;
 const h = 30;
@@ -63,7 +63,11 @@ const mapStateToProps = (state, ownProps) => {
     const selectedCard = state.mapState.selectedCard;
     //Getting monsters on this cell
     const monsters = state.mapState.monsters.active.filter((monster)=>(monster.position?monster.position.x===ownProps.cell.x&&monster.position.y===ownProps.cell.y:false));
-    const matches = selectedCard?calculMatches(selectedCard,neighbours):null;
+    //console.log("monsters :");
+    //console.log(state.mapState.monsters);
+    //console.log(ownProps);
+    //const monsters = getMonsters(state.mapState.monsters.active,ownProps.cell.x,ownProps.cell.y);
+    const matches = selectedCard?getMatches(selectedCard,neighbours):null;
     return {
       selectedCard: selectedCard,
       indexSelectedCard: state.mapState.indexSelectedCard,

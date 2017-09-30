@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { START_GAME, sendAction, END_TURN } from "../actions";
 
 
-const h = 40;
-const w = 60;
+const h = 20;
+const w = 80;
 
 const RenderTextButton = (isStarted) => {
   return (isStarted ? "End Turn" : "Start");
@@ -17,11 +17,11 @@ const StartButton = ({isStarted, click}) => {
     console.log(`clicking on a ${RenderTextButton(isStarted)}`);
     click(isStarted);}} >
     <g>
-   <rect x="10" y="10" width={w} height={h}
+   <rect x="0" y="0" width={w} height={h}
     style={{fill: "gray"}}
   />
-   <text x="20"
-      y="35"
+   <text x="10"
+      y="15"
       id="startButtonText" width={w} height={h}> {RenderTextButton(isStarted)} </text>
       </g>
 </svg>

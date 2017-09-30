@@ -55,9 +55,9 @@ const cardOnCell = (gameMap, x, y, card) => {
 const moveMonster = (monster,gameMap) => {
   var monsterPosition = {x:monster.next.x,y:monster.next.y};
   var nextPosition = monster.next;
-  console.log(monsterPosition);
+//  console.log(monsterPosition);
   var cellPosition = gameMap[monsterPosition.x][monsterPosition.y];
-  console.log(cellPosition);
+//  console.log(cellPosition);
   if(cellPosition.isPath){
     nextPosition = {x:cellPosition.isPath.x,y:cellPosition.isPath.y};
   }

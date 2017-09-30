@@ -1,31 +1,28 @@
 import React from "react";
+import StartButton from "./StartButton";
 import { connect } from "react-redux";
 
-const h = 40;
-const w = 60;
+const h = 80;
+const w = 160;
 
-const MatchesBox = ({matches,scoredMatches}) => {
-  const renderScoredMatches = (scoredMatches)=>{
-    if(scoredMatches!==null && scoredMatches !==undefined){
-      return ("scored : "+scoredMatches.total+"")
-    }
-  };
+const MatchesBox = ({scoredMatches}) => {
   return (
+  <div>
+   <StartButton/>
    <svg width={3*w} height={3*h}>
    <g>
-   <rect x="10" y="10" width={w} height={h}
-   style={{fill: "gray"}}
-   />
-   <text x="20"
-     y="35"
-     id="scoreText" width={w} height={h}> {renderScoredMatches(scoredMatches)} </text>
-     </g>
+     <text x="10" y="20">{scoredMatches?"Total : "+scoredMatches.total:""}</text>
+     <text x="10" y="40">{scoredMatches?scoredMatches.color.type + " : " + scoredMatches.color.score:""}</text>
+     <text x="10" y="60">{scoredMatches?scoredMatches.classC.type + " : " + scoredMatches.classC.score:""}</text>
+     <text x="10" y="80">{scoredMatches?scoredMatches.race.type + " : " + scoredMatches.race.score:""}</text>
+    </g>
    </svg>
+   </div>
  );
 };
 
 const mapStateToProps = state => {
-  return {matches : state.mapState.matches, scoredMatches: state.mapState.scoredMatches};
+  return {scoredMatches:state.mapState.scoredMatches};
 };
 
 
